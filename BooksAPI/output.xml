@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0 (Python 3.10.3 on win32)" generated="20220330 10:44:43.524" rpa="false" schemaversion="3">
+<suite id="s1" name="Books Api" source="c:\Users\pedro.dias\Desktop\Cursos\RobotFramework\BooksAPI\books_api.robot">
+<kw name="Conectar a minha API" library="resource_api" type="SETUP">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>fakeAPI</arg>
+<arg>${URL_API}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220330 10:44:43.654" level="INFO">Creating Session using : alias=fakeAPI, url=https://fakerestapi.azurewebsites.net/api/v1/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220330 10:44:43.653" endtime="20220330 10:44:43.665"/>
+</kw>
+<status status="PASS" starttime="20220330 10:44:43.653" endtime="20220330 10:44:43.665"/>
+</kw>
+<test id="s1-t1" name="Deletar um livro em específico (DELETE)" line="25">
+<kw name="Deletar o livro &quot;15&quot; e retornar Status Code &quot;200&quot;" library="resource_api" sourcename="Deletar o livro &quot;${LIVRO}&quot; e retornar Status Code &quot;${STATUS_CODE_DESEJADO}&quot;">
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>fakeAPI</arg>
+<arg>Books/${LIVRO}</arg>
+<arg>expected_status=${STATUS_CODE_DESEJADO}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20220330 10:44:44.906" level="INFO">DELETE Request : url=https://fakerestapi.azurewebsites.net/api/v1/Books/15 
+ path_url=/api/v1/Books/15 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220330 10:44:44.906" level="INFO">DELETE Response : url=https://fakerestapi.azurewebsites.net/api/v1/Books/15 
+ status=200, reason=OK 
+ headers={'Server': 'Kestrel', 'api-supported-versions': '1.0', 'Date': 'Wed, 30 Mar 2022 13:44:44 GMT', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220330 10:44:44.907" level="INFO">C:\Users\pedro.dias\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fakerestapi.azurewebsites.net'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220330 10:44:44.909" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220330 10:44:43.666" endtime="20220330 10:44:44.910"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220330 10:44:44.912" level="INFO"/>
+<status status="PASS" starttime="20220330 10:44:44.910" endtime="20220330 10:44:44.912"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20220330 10:44:44.914" level="INFO">${RESPOSTA} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220330 10:44:44.912" endtime="20220330 10:44:44.914"/>
+</kw>
+<status status="PASS" starttime="20220330 10:44:43.666" endtime="20220330 10:44:44.915"/>
+</kw>
+<kw name="Conferir se o livro &quot;15&quot; foi deletado com sucesso" library="resource_api" sourcename="Conferir se o livro ${LIVRO} foi deletado com sucesso">
+<kw name="Requisitar o livro &quot;${LIVRO}&quot; e retornar Status Code &quot;400&quot;" library="resource_api" sourcename="Requisitar o livro &quot;${LIVRO}&quot; e retornar Status Code &quot;${STATUS_CODE_DESEJADO}&quot;">
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${RESPOSTA}</var>
+<arg>fakeAPI</arg>
+<arg>Books/${LIVRO}</arg>
+<arg>expected_status=${STATUS_CODE_DESEJADO}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220330 10:44:45.138" level="INFO">GET Request : url=https://fakerestapi.azurewebsites.net/api/v1/Books/%2215%22 
+ path_url=/api/v1/Books/%2215%22 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220330 10:44:45.139" level="INFO">GET Response : url=https://fakerestapi.azurewebsites.net/api/v1/Books/%2215%22 
+ status=400, reason=Bad Request 
+ headers={'Transfer-Encoding': 'chunked', 'Content-Type': 'application/problem+json; charset=utf-8', 'Server': 'Kestrel', 'Date': 'Wed, 30 Mar 2022 13:44:44 GMT'} 
+ body={"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-8c5a1112a65da546ab6743b374008038-9f4956e8cf22ce49-00","errors":{"id":["The value '\"15\"' is not valid."]}} 
+ </msg>
+<msg timestamp="20220330 10:44:45.139" level="INFO">C:\Users\pedro.dias\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py:1043: InsecureRequestWarning: Unverified HTTPS request is being made to host 'fakerestapi.azurewebsites.net'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20220330 10:44:45.141" level="INFO">${RESPOSTA} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20220330 10:44:44.917" endtime="20220330 10:44:45.141"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220330 10:44:45.143" level="INFO">&lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20220330 10:44:45.143" endtime="20220330 10:44:45.143"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20220330 10:44:45.145" level="INFO">${RESPOSTA} = &lt;Response [400]&gt;</msg>
+<status status="PASS" starttime="20220330 10:44:45.144" endtime="20220330 10:44:45.145"/>
+</kw>
+<status status="PASS" starttime="20220330 10:44:44.916" endtime="20220330 10:44:45.145"/>
+</kw>
+<status status="PASS" starttime="20220330 10:44:44.915" endtime="20220330 10:44:45.146"/>
+</kw>
+<status status="PASS" starttime="20220330 10:44:43.665" endtime="20220330 10:44:45.147"/>
+</test>
+<doc>Documentação da API: https://fakerestapi.azurewebsites.net/index.html</doc>
+<status status="PASS" starttime="20220330 10:44:43.529" endtime="20220330 10:44:45.151"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Books Api">Books Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
